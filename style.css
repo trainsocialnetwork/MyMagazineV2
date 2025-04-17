@@ -1,0 +1,187 @@
+/* =========================
+   全体のスタイル
+========================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* お好みで変更 */
+  background-color: #fff;
+  color: #333;
+}
+
+.wrapper {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1rem; /* サイドに少し余白 */
+}
+
+/* =========================
+   表紙（カバー）部分
+========================= */
+.cover {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.cover-image-wrapper {
+  position: relative;
+}
+
+.cover-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 最初は空なので、JSで挿入されるまでは何も表示されない */
+}
+
+.cover-heading {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  color: #000;
+}
+
+.cover-heading h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+}
+
+/* 縦書きを活かして「issue-info」を縦に配置 */
+.issue-info {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 1rem;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.cover-catch {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.3); /* 半透明の黒背景で文字を強調 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+/* =========================
+   目次
+========================= */
+.table-of-contents {
+  margin: 3rem 0;
+}
+
+.table-of-contents h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ccc;
+  display: inline-block;
+}
+
+.table-of-contents ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table-of-contents li {
+  line-height: 1.8;
+  margin: 0.5rem 0;
+}
+
+.table-of-contents li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.table-of-contents li a:hover {
+  color: #777;
+}
+
+/* =========================
+   テーマ・章セクション
+========================= */
+.theme-section {
+  margin-bottom: 4rem;
+  page-break-inside: avoid; /* 印刷時の見やすさ対策（任意） */
+}
+
+.theme-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #666;
+  padding-left: 0.5rem;
+}
+
+.theme-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* =========================
+   画像レイアウト
+========================= */
+
+/* 大きい1枚 + 縦2枚 */
+.photoset-large-and-vertical2 {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.left-large-img, .right-vertical-2 {
+  flex: 1;
+  position: relative;
+}
+.left-large-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.right-vertical-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.right-vertical-2 img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 3カラムで画像3枚 */
+.photoset-3columns {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.photoset-3columns img {
+  width: 100%;
+  height: auto;
+  display: block;
+  flex: 1;
+}
+
+/* 画像に軽いシャドウを付けて雑誌っぽく */
+.theme-section img {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+/* =========================
+   レスポンシブ対応
+========================= */
+@media (max-width: 768px) {
+  .photoset-large-and-vertical2 {
+    flex-direction: column;
+  }
+  .photoset-3columns {
+    flex-direction: column;
+  }
+}
+

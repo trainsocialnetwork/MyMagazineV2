@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>RoomClip Magazine</title>
+  <!-- メタタグやアイコンなど必要に応じて追加 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrapper">
+  <!-- ★ 表紙セクション ★ -->
+  <header class="cover">
+    <!-- カバー画像を後でJSから差し替えてもOKですが、ここでは一旦空にしておきます -->
+    <div class="cover-image-wrapper">
+      <img src="" alt="Magazine Cover Image" class="cover-image" id="cover-image">
+    </div>
+
+    <!-- タイトル・号数 -->
+    <div class="cover-heading">
+      <h1>RoomClip MAGAZINE</h1>
+      <!-- 縦書きを使う例 -->
+      <p class="issue-info">2025<br>4月号</p>
+    </div>
+
+    <!-- キャッチコピーを重ねる -->
+    <h2 class="cover-catch">自分らしい、春を過ごす</h2>
+  </header>
+
+  <!-- ★ 目次セクション ★ -->
+  <section class="table-of-contents">
+    <h2>目次</h2>
+    <ul id="toc-list">
+      <!-- script.js で自動挿入 -->
+    </ul>
+  </section>
+
+  <!-- ★ テーマごとのセクションを挿入する領域 ★ -->
+  <div id="themes-container">
+    <!-- script.js で動的に生成 -->
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- 必要に応じてJS読み込み。magazine_data.jsonと同じ階層にある想定 -->
+<script src="script.js"></script>
+
+</body>
+</html>
