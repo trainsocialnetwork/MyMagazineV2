@@ -16,13 +16,8 @@ body {
 ====================================== */
 .v601_22 {
   width: 100%;
-  height: 700px; 
-  background: rgba(255,255,255,1);
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
+  position: relative;
+  background: #fff;
 }
 .v601_23 {
   /* 最もスコアの高い画像をbackground-imageで差し替え */
