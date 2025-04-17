@@ -38,7 +38,7 @@ body {
   position: absolute;
   color: #000;
   font-weight: bold;
-  font-family: Noto Sans CJK JP;
+  font-family: 'Noto Sans CJK JP', sans-serif;
 }
 .v601_27 {
   top: 50px;
