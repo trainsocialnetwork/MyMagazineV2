@@ -83,7 +83,7 @@ text-align: left;
 #toc-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1.0rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -92,7 +92,7 @@ text-align: left;
   border: 1px solid #ccc;
   border-radius: 4px;
   background: #f9f9f9;
-  padding: 0.3rem 0.5rem;
+  padding: 1.0rem 1.5rem;
 }
 #toc-list li a {
   text-decoration: none;
@@ -172,7 +172,7 @@ text-align: left;
   padding-left: 0.5rem;
   font-family: 'Noto Sans CJK JP', sans-serif;
 }
-.theme-section-title {
+.theme-section-title:not(:first-of-type) {
   margin-top: 20%;
 }
 .theme-section-intro {
