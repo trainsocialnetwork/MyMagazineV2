@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>RoomClip Magazine</title>
-  <!-- Google Fontsやお好みのフォントを読み込み -->
+  <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css?family=Noto+Sans+CJK+JP&display=swap"
     rel="stylesheet"
@@ -11,29 +11,26 @@
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <!-- ▼ 表紙（トップ） ▼ -->
+
+  <!-- ★ 表紙(トップ)部分 ★ -->
   <div class="v601_22">
-    <!-- 背景画像に最高スコアの投稿を差し替える予定 -->
+    <!-- 最もスコアの高い画像を背景にする -->
     <div class="v601_23"></div>
 
-    <!-- 雑誌タイトル -->
+    <!-- タイトル類 -->
     <span class="v601_27">RoomClip<br>MAGAZINE</span>
-    <!-- キャッチコピー -->
     <span class="v601_28">自分らしい、<br>　　春を過ごす</span>
-    <!-- 号数 -->
-    <span class="v601_34">
-      4<br>月<br>号
-    </span>
+    <span class="v601_34">4<br>月<br>号</span>
     <span class="v601_35">2025年</span>
   </div>
 
-  <!-- ▼ 目次を動的に生成する領域（横並び折り返し） ▼ -->
+  <!-- ★ 目次 ★ -->
   <section class="table-of-contents">
     <h2>目次</h2>
     <ul id="toc-list"></ul>
   </section>
 
-  <!-- ▼ テーマ別コンテンツ ▼ -->
+  <!-- ★ 動的コンテンツ(テーマごとの画像レイアウト) ★ -->
   <div id="themes-container"></div>
 
   <script src="./script.js"></script>
