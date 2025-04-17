@@ -35,7 +35,7 @@ body {
 }
 /* タイトル文字類 */
 .v601_27, .v601_28, .v601_34, .v601_35 {
-  position: relative;
+  position: absolute;
   color: #000;
   font-weight: bold;
   font-family: Noto Sans CJK JP;
