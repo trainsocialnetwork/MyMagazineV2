@@ -1,187 +1,181 @@
-/* =========================
-   全体ベース
-========================= */
-html, body {
+/* ----------------------------
+   基本リセット
+---------------------------- */
+* {
+  box-sizing: border-box;
+}
+body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  background-color: #fff;
-  color: #333;
-  font-size: 16px; /* ベースフォントサイズを16pxに上げる */
-  line-height: 1.5;
+  font-family: 'Noto Sans CJK JP', sans-serif;
+  font-size: 14px;
 }
 
-.wrapper {
-  max-width: 600px; /* SP版想定の幅 */
-  margin: 0 auto;
+/* ----------------------------
+   表紙 (トップ)部分
+---------------------------- */
+.v601_22 {
+  /* 幅360px, 高さ400pxとのことですが、画面レイアウトに応じて調整ください */
+  width: 360px;
+  height: 400px;
+  background: rgba(255,255,255,1);
+  position: relative; 
+  /* ここを absolute でtop:0;left:0; にする場合、他要素と被らないよう注意 */
+  margin: 0 auto; /* 真ん中に配置(任意) */
+  overflow: hidden;
+}
+.v601_23 {
+  width: 299px;
+  height: 299px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 80px;  /* デフォルト150px→調整 */
+  left: 30px; /* デフォルト0px→見栄えに合わせ調整 */
+}
+.v601_27 {
+  width: 206px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 20px;
+  left: 140px;
+  font-weight: bold;
+  font-size: 28px; /* 40px→スマホ向けに少し小さめ */
+  text-align: left;
+  line-height: 1.2;
+}
+.v601_28 {
+  width: 211px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 200px;
+  left: 10px;
+  font-weight: bold;
+  font-size: 18px; /* 30px->SP版調整 */
+  text-align: left;
+  line-height: 1.4;
+}
+.v601_34 {
+  width: 22px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 80px;
+  left: 320px;
+  font-weight: bold;
+  font-size: 14px; 
+  text-align: center;
+  line-height: 1.2;
+}
+.v601_35 {
+  width: 74px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 120px;
+  left: 300px;
+  font-weight: bold;
+  font-size: 14px; 
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ----------------------------
+   目次セクション
+---------------------------- */
+.table-of-contents {
+  margin: 410px auto 2rem; 
+  /* 表紙が高さ400pxなので、その下に配置（上記v601_22と位置の兼ね合いに注意） */
+  max-width: 360px; /* 同じ幅を想定 */
   padding: 0 1rem;
 }
-
-/* =========================
-   表紙（カバー）
-========================= */
-.cover {
-  position: relative;
-  margin-bottom: 2rem;
-}
-.cover-image-wrapper {
-  position: relative;
-}
-.cover-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.cover-heading {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  color: #000;
-}
-/* 雑誌風に大きく表示。SPでもある程度見やすく */
-.cover-heading h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0 0 0.5rem 0;
-}
-/* 縦書きを自然に見せる */
-.issue-info {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-top: 0;
-}
-
-.cover-catch {
-  position: absolute;
-  bottom: 5%;
-  left: 5%;
-  font-size: 1.4rem;
-  color: #fff;
-  text-shadow: 0 0 5px rgba(0,0,0,0.5);
-  background: rgba(0,0,0,0.3);
-  padding: 0.3rem 0.5rem;
-  border-radius: 0.25rem;
-}
-
-/* =========================
-   目次
-========================= */
-.table-of-contents {
-  margin: 2rem 0;
-}
-
 .table-of-contents h2 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
   border-bottom: 2px solid #ccc;
   display: inline-block;
 }
-
-/* 横に並べて折り返す */
 #toc-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 折り返し */
   gap: 0.5rem;
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
-
 #toc-list li {
-  /* inline要素っぽいブロック */
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 0.2rem 0.5rem;
-  background-color: #f9f9f9;
+  padding: 0.3rem 0.5rem;
+  background: #f9f9f9;
+  font-size: 0.9rem;
 }
-
 #toc-list li a {
   text-decoration: none;
   color: #333;
-  font-size: 0.9rem;
 }
-
 #toc-list li a:hover {
   color: #777;
 }
 
-/* =========================
-   テーマ・章セクション
-========================= */
-.theme-section {
-  margin-bottom: 3rem;
-  page-break-inside: avoid; 
+/* ----------------------------
+   テーマコンテナ
+---------------------------- */
+#themes-container {
+  max-width: 360px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
 }
 
-.theme-section h2 {
-  font-size: 1.4rem; /* SP版でも見出しは少し大きめ */
-  margin-bottom: 0.5rem;
-  border-left: 4px solid #666;
-  padding-left: 0.5rem;
-  color: #333;
-}
-
-.theme-intro {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-/* =========================
-   画像レイアウト（SP版単一カラム）
-========================= */
-/*
-  1) 大きい画像を「幅100%」で表示。実際に「縦に大きく」見せるためには
-     高さ固定 or min-height などで工夫可能ですが、ここではautoにしておき、
-     余白や枠などで見栄えを調整します。
-
-  2) 縦2枚は、その下に同じ幅で2枚を縦に並べる。
+/* 大画像+縦2枚レイアウト, 3カラム などは
+   これまでのコード方針に合わせて記述。
+   SP版用に例として縦に並ぶ実装を簡易記載
 */
 .photoset-large-and-vertical2 {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
-
-/* 大きい画像だけをまとめるラップ要素 */
-.left-large-img img {
+.large-img img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
-
-/* 2枚の画像を縦に並べる */
-.right-vertical-2 img {
+.vertical-2 img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-/* 3カラム → SPでは1カラムでもOKだが
-   要件によるので、ここでは「2) SP版だけど3枚連続で表示」を
-   縦に並べる例にしています。
-*/
+/* 3カラム → 実際はSPで縦並び */
 .photoset-3columns {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 .photoset-3columns img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-/* 画像の見た目(影や角丸) */
-.theme-section img {
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* テーマ見出し */
+.theme-section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-left: 4px solid #666;
+  padding-left: 0.5rem;
+}
+.theme-section-intro {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* 画像スタイル */
+.theme-section-img {
+  width: 100%;
+  border: 1px solid #eee;
   border-radius: 4px;
-}
-
-/* SP版につき、特別なメディアクエリは最小限に */
-@media (max-width: 600px) {
-  /* 必要があれば記述。今回は幅600px想定なので省略 */
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }

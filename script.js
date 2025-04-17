@@ -1,16 +1,15 @@
 /**
  * script.js
- * - magazine_data.json をfetchして取得
- * - テーマごとのセクション生成 (大1枚+縦2枚 → 3カラム(実際は3枚縦並び))
- * - 目次を横並びボタン風に生成
- * - 表紙画像にスコア最大投稿を使用
+ * - magazine_data.json をfetchし、
+ *   1) スコア最大画像を .v601_23 の background-image に差し替え
+ *   2) 目次を横並びで生成 (#toc-list)
+ *   3) テーマ別に画像レイアウトを #themes-container に生成 (例: 9枚= 大1枚+縦2枚 + 3カラムx2)
  */
 
-// テーマに合わせた「おしゃれな見出し文・導入文」を定義
-// ※例として任意の文言を入れています
+// テーマ導入文サンプル
 const THEME_INTRO_TEXT = {
-  "季節": "季節感を取り入れたインテリアで、春夏秋冬を楽しもう。",
-  "ヴィンテージスタイル": "古き良きデザインの味わいを生かす、ヴィンテージスタイル特集。",
+  "季節": "季節感あふれるインテリアで暮らしを楽しむ。",
+   "ヴィンテージスタイル": "古き良きデザインの味わいを生かす、ヴィンテージスタイル特集。",
   "北欧スタイル": "シンプルで温かみのある北欧テイストのお部屋づくり。",
   "ナチュラルスタイル": "自然素材をたっぷりと取り入れた、優しい雰囲気のナチュラルスタイル。",
   "インダストリアルスタイル": "無骨でクールな空間。人気再燃のインダストリアルスタイルを楽しむ。",
@@ -29,137 +28,123 @@ const THEME_INTRO_TEXT = {
   "暮らしの一コマ": "何気ない日常のワンシーン。みんなの暮らしのひとコマをお届け。"
 };
 
-
-fetch('magazine_data.json')
+fetch('./magazine_data.json')
   .then(response => response.json())
   .then(data => {
-    // data: { "季節": [ {...}, {...} ], "ヴィンテージスタイル": [...], ... }
-    const tocList = document.getElementById('toc-list');
-    const themesContainer = document.getElementById('themes-container');
+    // dataは { "季節": [ {photo_id, filenamelink, score, ...}, ... ], ... }
+    const themes = Object.keys(data);
 
-    // -------------------------
-    // 1) 表紙画像 (スコア最大)
-    // -------------------------
+    // (1) スコア最大投稿を検索して .v601_23 の background-image 差し替え
     let maxScore = -1;
-    let topPhotoLink = '';
-    for (let themeName in data) {
-      if (!data.hasOwnProperty(themeName)) continue;
-      data[themeName].forEach(item => {
+    let topLink = '';
+    for (const theme of themes) {
+      data[theme].forEach(item => {
         if (item.score > maxScore) {
           maxScore = item.score;
-          topPhotoLink = item.filenamelink;
+          topLink = item.filenamelink;
         }
       });
     }
-    const coverImageElem = document.getElementById('cover-image');
-    if (topPhotoLink) {
-      coverImageElem.src = topPhotoLink;
+    if (topLink) {
+      const coverDiv = document.querySelector('.v601_23');
+      coverDiv.style.backgroundImage = `url(${topLink})`;
     }
 
-    // -------------------------
-    // 2) 目次リスト (横並び)
-    // -------------------------
-    for (let themeName in data) {
-      if(!data.hasOwnProperty(themeName)) continue;
-
+    // (2) 目次を横並びで生成
+    const tocList = document.getElementById('toc-list');
+    themes.forEach(themeName => {
       const li = document.createElement('li');
-      const anchor = document.createElement('a');
-      anchor.href = `#theme-${themeName}`;
-      anchor.textContent = themeName;
-      li.appendChild(anchor);
+      const a = document.createElement('a');
+      a.href = `#theme-${themeName}`; // ページ内リンク用id
+      a.textContent = themeName;
+      li.appendChild(a);
       tocList.appendChild(li);
-    }
+    });
 
-    // -------------------------
-    // 3) テーマごとセクション
-    // -------------------------
-    for (let themeName in data) {
-      if(!data.hasOwnProperty(themeName)) continue;
-
-      const section = document.createElement('section');
-      section.id = `theme-${themeName}`;
-      section.className = 'theme-section';
-
-      // 見出し
-      const h2 = document.createElement('h2');
-      h2.textContent = themeName;
-      section.appendChild(h2);
-
-      // 導入文 (THEME_INTRO_TEXTから取得)
-      const intro = document.createElement('p');
-      intro.className = 'theme-intro';
-      intro.textContent = THEME_INTRO_TEXT[themeName] || 
-        `${themeName}に関する素敵な投稿をご紹介します。`;
-      section.appendChild(intro);
-
-      // 画像リスト
+    // (3) テーマ別コンテンツを生成
+    const container = document.getElementById('themes-container');
+    themes.forEach(themeName => {
       const items = data[themeName];
 
-      // 1テーマ内で「9枚1セット: (1) 大1枚+縦2枚 → (2) 3カラム → (3)3カラム」を繰り返す
-      // SP版なので、それぞれ単一カラムで順番に並べるレイアウト
-      let index = 0;
-      while (index < items.length) {
-        // (1) 大1枚+縦2枚
-        const photoSet1 = document.createElement('div');
-        photoSet1.className = "photoset-large-and-vertical2";
+      // セクションタイトル
+      const titleEl = document.createElement('div');
+      titleEl.className = 'theme-section-title';
+      titleEl.id = `theme-${themeName}`; // アンカー用
+      titleEl.textContent = themeName;
+      container.appendChild(titleEl);
 
+      // 導入文
+      const introEl = document.createElement('div');
+      introEl.className = 'theme-section-intro';
+      introEl.textContent =
+        THEME_INTRO_TEXT[themeName] || `${themeName}の投稿を紹介します。`;
+      container.appendChild(introEl);
+
+      // 画像を9枚単位で (大1枚+縦2枚) + (3カラム) + (3カラム)
+      // SP想定で縦並びだが、要件に合わせここでは簡易実装
+      let idx = 0;
+      while (idx < items.length) {
+        // 1) 大1枚 + 縦2枚
+        const set1 = document.createElement('div');
+        set1.className = 'photoset-large-and-vertical2';
         // 大画像
-        const leftDiv = document.createElement('div');
-        leftDiv.className = "left-large-img";
-        if (items[index]) {
+        const largeDiv = document.createElement('div');
+        largeDiv.className = 'large-img';
+        if (items[idx]) {
           const img = document.createElement('img');
-          img.src = items[index].filenamelink;
-          leftDiv.appendChild(img);
-          index++;
+          img.className = 'theme-section-img';
+          img.src = items[idx].filenamelink;
+          largeDiv.appendChild(img);
+          idx++;
         }
-        photoSet1.appendChild(leftDiv);
+        set1.appendChild(largeDiv);
 
         // 縦2枚
-        const rightDiv = document.createElement('div');
-        rightDiv.className = "right-vertical-2";
+        const vertDiv = document.createElement('div');
+        vertDiv.className = 'vertical-2';
         for (let i=0; i<2; i++) {
-          if (items[index]) {
+          if (items[idx]) {
             const img = document.createElement('img');
-            img.src = items[index].filenamelink;
-            rightDiv.appendChild(img);
-            index++;
+            img.className = 'theme-section-img';
+            img.src = items[idx].filenamelink;
+            vertDiv.appendChild(img);
+            idx++;
           }
         }
-        photoSet1.appendChild(rightDiv);
+        set1.appendChild(vertDiv);
 
-        section.appendChild(photoSet1);
+        container.appendChild(set1);
 
-        // (2) 3カラム → SP版では3枚を順番に縦
-        const photoSet2 = document.createElement('div');
-        photoSet2.className = "photoset-3columns";
+        // 2) 3カラム (SPでは縦3枚)
+        const set2 = document.createElement('div');
+        set2.className = 'photoset-3columns';
         for (let i=0; i<3; i++) {
-          if (items[index]) {
+          if (items[idx]) {
             const img = document.createElement('img');
-            img.src = items[index].filenamelink;
-            photoSet2.appendChild(img);
-            index++;
+            img.className = 'theme-section-img';
+            img.src = items[idx].filenamelink;
+            set2.appendChild(img);
+            idx++;
           }
         }
-        section.appendChild(photoSet2);
+        container.appendChild(set2);
 
-        // (3) 3カラム
-        const photoSet3 = document.createElement('div');
-        photoSet3.className = "photoset-3columns";
+        // 3) 3カラム
+        const set3 = document.createElement('div');
+        set3.className = 'photoset-3columns';
         for (let i=0; i<3; i++) {
-          if (items[index]) {
+          if (items[idx]) {
             const img = document.createElement('img');
-            img.src = items[index].filenamelink;
-            photoSet3.appendChild(img);
-            index++;
+            img.className = 'theme-section-img';
+            img.src = items[idx].filenamelink;
+            set3.appendChild(img);
+            idx++;
           }
         }
-        section.appendChild(photoSet3);
+        container.appendChild(set3);
       }
-
-      themesContainer.appendChild(section);
-    }
-
+    });
   })
   .catch(err => {
-    console.error("Error loading JSON:", err);
+    console.error("Error loading magazine_data.json:", err);
   });
