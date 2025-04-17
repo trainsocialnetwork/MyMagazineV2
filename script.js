@@ -1,9 +1,9 @@
 /**
  * script.js
- * - magazine_data.json をfetchし、
- *   1) スコア最大画像を .v601_23 の background-image に差し替え
- *   2) 目次を横並びで生成 (#toc-list)
- *   3) テーマ別に画像レイアウトを #themes-container に生成 (例: 9枚= 大1枚+縦2枚 + 3カラムx2)
+ * - magazine_data.json をfetch
+ * - 1) スコア最大の画像を .v601_23 (表紙)に設定
+ * - 2) 目次生成
+ * - 3) テーマごとの画像を (大1枚+縦2枚) + (3カラム×2) で追加
  */
 
 // テーマ導入文サンプル
@@ -31,42 +31,42 @@ const THEME_INTRO_TEXT = {
 fetch('./magazine_data.json')
   .then(res => res.json())
   .then(data => {
-    // data: { "季節": [...], "北欧スタイル": [...], ... }
-    const themeNames = Object.keys(data);
+    const themes = Object.keys(data);
 
-    // (1) スコア最大画像をカバーに
+    // (1) スコア最大画像で表紙を飾る
     let maxScore = -1;
-    let topLink = '';
-    themeNames.forEach(t => {
-      data[t].forEach(item => {
-        if (item.score > maxScore) {
-          maxScore = item.score;
-          topLink = item.filenamelink;
+    let topImage = '';
+    themes.forEach(t => {
+      data[t].forEach(post => {
+        if (post.score > maxScore) {
+          maxScore = post.score;
+          topImage = post.filenamelink;
         }
       });
     });
-    if (topLink) {
-      document.querySelector('.v601_23').style.backgroundImage = `url(${topLink})`;
+    if (topImage) {
+      const cover = document.querySelector('.v601_23');
+      cover.style.backgroundImage = `url(${topImage})`;
     }
 
-    // (2) 目次生成 (横並び折り返し)
+    // (2) 目次 (#toc-list)
     const tocList = document.getElementById('toc-list');
-    themeNames.forEach(theme => {
+    themes.forEach(t => {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.href = `#theme-${theme}`;
-      a.textContent = theme;
+      a.href = `#theme-${t}`;
+      a.textContent = t;
       li.appendChild(a);
       tocList.appendChild(li);
     });
 
-    // (3) テーマごとのコンテンツ
+    // (3) テーマごとの画像レイアウト (#themes-container)
     const container = document.getElementById('themes-container');
 
-    themeNames.forEach(theme => {
+    themes.forEach(theme => {
       const items = data[theme];
 
-      // セクションタイトル
+      // 見出し
       const titleEl = document.createElement('div');
       titleEl.className = 'theme-section-title';
       titleEl.id = `theme-${theme}`; // アンカーリンク用
@@ -77,13 +77,12 @@ fetch('./magazine_data.json')
       const introEl = document.createElement('div');
       introEl.className = 'theme-section-intro';
       introEl.textContent =
-        THEME_INTRO_TEXT[theme] || `${theme}の素敵な投稿をどうぞ。`;
+        THEME_INTRO_TEXT[theme] || `${theme}の素敵な投稿です。`;
       container.appendChild(introEl);
 
-      // 9枚単位で (1) 大1枚+縦2枚 + (2) 3カラム + (3) 3カラム
       let i = 0;
       while (i < items.length) {
-        // (1) 大1枚 + 縦2枚
+        // 1) (大1枚 + 縦2枚)
         const photoset1 = document.createElement('div');
         photoset1.className = 'photoset-large-and-vertical2';
 
@@ -113,7 +112,7 @@ fetch('./magazine_data.json')
 
         container.appendChild(photoset1);
 
-        // (2) 3カラム
+        // 2) 3カラム
         const photoset2 = document.createElement('div');
         photoset2.className = 'photoset-3columns';
         for (let j = 0; j < 3; j++) {
@@ -127,7 +126,7 @@ fetch('./magazine_data.json')
         }
         container.appendChild(photoset2);
 
-        // (3) 3カラム
+        // 3) 3カラム
         const photoset3 = document.createElement('div');
         photoset3.className = 'photoset-3columns';
         for (let j = 0; j < 3; j++) {
@@ -144,5 +143,5 @@ fetch('./magazine_data.json')
     });
   })
   .catch(err => {
-    console.error("Error loading magazine_data.json:", err);
+    console.error("Error loading JSON:", err);
   });
