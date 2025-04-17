@@ -28,120 +28,119 @@ const THEME_INTRO_TEXT = {
   "暮らしの一コマ": "何気ない日常のワンシーン。みんなの暮らしのひとコマをお届け。"
 };
 
-fetch('./magazine_data.json')
-  .then(res => res.json())
+fetch("./magazine_data.json")
+  .then(response => response.json())
   .then(data => {
-    const themes = Object.keys(data);
+    // data: { "季節": [ {...}, {...} ], "北欧スタイル": [...], ... }
+    const themeNames = Object.keys(data);
 
-    // (1) スコア最大画像で表紙を飾る
+    // 1) スコア最大画像を表紙に設定
     let maxScore = -1;
-    let topImage = '';
-    themes.forEach(t => {
-      data[t].forEach(post => {
-        if (post.score > maxScore) {
-          maxScore = post.score;
-          topImage = post.filenamelink;
+    let topLink = '';
+    for (let theme of themeNames) {
+      data[theme].forEach(item => {
+        if (item.score > maxScore) {
+          maxScore = item.score;
+          topLink = item.filenamelink;
         }
       });
-    });
-    if (topImage) {
+    }
+    if (topLink) {
       const cover = document.querySelector('.v601_23');
-      cover.style.backgroundImage = `url(${topImage})`;
+      cover.style.backgroundImage = `url(${topLink})`;
     }
 
-    // (2) 目次 (#toc-list)
+    // 2) 目次生成
     const tocList = document.getElementById('toc-list');
-    themes.forEach(t => {
+    themeNames.forEach(theme => {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.href = `#theme-${t}`;
-      a.textContent = t;
+      a.href = `#theme-${theme}`;
+      a.textContent = theme;
       li.appendChild(a);
       tocList.appendChild(li);
     });
 
-    // (3) テーマごとの画像レイアウト (#themes-container)
+    // 3) テーマ別コンテンツ
     const container = document.getElementById('themes-container');
 
-    themes.forEach(theme => {
+    themeNames.forEach(theme => {
       const items = data[theme];
 
       // 見出し
       const titleEl = document.createElement('div');
       titleEl.className = 'theme-section-title';
-      titleEl.id = `theme-${theme}`; // アンカーリンク用
+      titleEl.id = `theme-${theme}`;
       titleEl.textContent = theme;
       container.appendChild(titleEl);
 
       // 導入文
       const introEl = document.createElement('div');
       introEl.className = 'theme-section-intro';
-      introEl.textContent =
-        THEME_INTRO_TEXT[theme] || `${theme}の素敵な投稿です。`;
+      introEl.textContent = THEME_INTRO_TEXT[theme] || `${theme}に関する投稿を紹介します。`;
       container.appendChild(introEl);
 
+      // 9枚単位: (大1+縦2) + (3カラム) + (3カラム)
       let i = 0;
       while (i < items.length) {
-        // 1) (大1枚 + 縦2枚)
-        const photoset1 = document.createElement('div');
-        photoset1.className = 'photoset-large-and-vertical2';
+        // (大1+縦2)
+        const set1 = document.createElement('div');
+        set1.className = 'photoset-large-and-vertical2';
 
+        // 左(大画像)
         const leftDiv = document.createElement('div');
         leftDiv.className = 'left-large-img';
         if (items[i]) {
           const img = document.createElement('img');
-          img.className = 'theme-section-img';
           img.src = items[i].filenamelink;
           leftDiv.appendChild(img);
           i++;
         }
-        photoset1.appendChild(leftDiv);
+        set1.appendChild(leftDiv);
 
+        // 右(縦2枚)
         const rightDiv = document.createElement('div');
         rightDiv.className = 'right-vertical-2';
         for (let j = 0; j < 2; j++) {
           if (items[i]) {
             const img = document.createElement('img');
-            img.className = 'theme-section-img';
             img.src = items[i].filenamelink;
             rightDiv.appendChild(img);
             i++;
           }
         }
-        photoset1.appendChild(rightDiv);
+        set1.appendChild(rightDiv);
 
-        container.appendChild(photoset1);
+        container.appendChild(set1);
 
-        // 2) 3カラム
-        const photoset2 = document.createElement('div');
-        photoset2.className = 'photoset-3columns';
+        // (3カラム) 1回目
+        const set2 = document.createElement('div');
+        set2.className = 'photoset-3columns';
         for (let j = 0; j < 3; j++) {
           if (items[i]) {
             const img = document.createElement('img');
-            img.className = 'theme-section-img';
             img.src = items[i].filenamelink;
-            photoset2.appendChild(img);
+            set2.appendChild(img);
             i++;
           }
         }
-        container.appendChild(photoset2);
+        container.appendChild(set2);
 
-        // 3) 3カラム
-        const photoset3 = document.createElement('div');
-        photoset3.className = 'photoset-3columns';
+        // (3カラム) 2回目
+        const set3 = document.createElement('div');
+        set3.className = 'photoset-3columns';
         for (let j = 0; j < 3; j++) {
           if (items[i]) {
             const img = document.createElement('img');
-            img.className = 'theme-section-img';
             img.src = items[i].filenamelink;
-            photoset3.appendChild(img);
+            set3.appendChild(img);
             i++;
           }
         }
-        container.appendChild(photoset3);
+        container.appendChild(set3);
       }
     });
   })
   .catch(err => {
-    console.error("Error loading JSON:", err);
+    console.error("Error loading magazine_data.json:", err);
   });
