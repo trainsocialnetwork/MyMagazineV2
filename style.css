@@ -1,70 +1,68 @@
 /* =========================
-   全体のスタイル
+   全体ベース
 ========================= */
 html, body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif; /* お好みで変更 */
+  font-family: "Helvetica Neue", Arial, sans-serif;
   background-color: #fff;
   color: #333;
+  font-size: 16px; /* ベースフォントサイズを16pxに上げる */
+  line-height: 1.5;
 }
 
 .wrapper {
-  max-width: 1080px;
+  max-width: 600px; /* SP版想定の幅 */
   margin: 0 auto;
-  padding: 0 1rem; /* サイドに少し余白 */
+  padding: 0 1rem;
 }
 
 /* =========================
-   表紙（カバー）部分
+   表紙（カバー）
 ========================= */
 .cover {
   position: relative;
   margin-bottom: 2rem;
 }
-
 .cover-image-wrapper {
   position: relative;
 }
-
 .cover-image {
   width: 100%;
   height: auto;
   display: block;
-  /* 最初は空なので、JSで挿入されるまでは何も表示されない */
 }
 
 .cover-heading {
   position: absolute;
-  top: 2rem;
-  left: 2rem;
+  top: 1.5rem;
+  left: 1.5rem;
   color: #000;
 }
-
+/* 雑誌風に大きく表示。SPでもある程度見やすく */
 .cover-heading h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 0 0 0.5rem 0;
 }
-
-/* 縦書きを活かして「issue-info」を縦に配置 */
+/* 縦書きを自然に見せる */
 .issue-info {
   writing-mode: vertical-rl;
   text-orientation: upright;
   font-size: 1rem;
-  margin-top: 1rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  margin-top: 0;
 }
 
 .cover-catch {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 5%;
-  font-size: 2rem;
+  font-size: 1.4rem;
   color: #fff;
-  text-shadow: 0 0 10px rgba(0,0,0,0.5);
-  background: rgba(0,0,0,0.3); /* 半透明の黒背景で文字を強調 */
-  padding: 0.5rem 1rem;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.3);
+  padding: 0.3rem 0.5rem;
   border-radius: 0.25rem;
 }
 
@@ -72,7 +70,7 @@ html, body {
    目次
 ========================= */
 .table-of-contents {
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 
 .table-of-contents h2 {
@@ -82,23 +80,31 @@ html, body {
   display: inline-block;
 }
 
-.table-of-contents ul {
+/* 横に並べて折り返す */
+#toc-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.table-of-contents li {
-  line-height: 1.8;
-  margin: 0.5rem 0;
+#toc-list li {
+  /* inline要素っぽいブロック */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  background-color: #f9f9f9;
 }
 
-.table-of-contents li a {
+#toc-list li a {
   text-decoration: none;
   color: #333;
+  font-size: 0.9rem;
 }
 
-.table-of-contents li a:hover {
+#toc-list li a:hover {
   color: #777;
 }
 
@@ -106,82 +112,76 @@ html, body {
    テーマ・章セクション
 ========================= */
 .theme-section {
-  margin-bottom: 4rem;
-  page-break-inside: avoid; /* 印刷時の見やすさ対策（任意） */
+  margin-bottom: 3rem;
+  page-break-inside: avoid; 
 }
 
 .theme-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 1.4rem; /* SP版でも見出しは少し大きめ */
+  margin-bottom: 0.5rem;
   border-left: 4px solid #666;
   padding-left: 0.5rem;
+  color: #333;
 }
 
 .theme-intro {
   font-size: 1rem;
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #555;
 }
 
 /* =========================
-   画像レイアウト
+   画像レイアウト（SP版単一カラム）
 ========================= */
+/*
+  1) 大きい画像を「幅100%」で表示。実際に「縦に大きく」見せるためには
+     高さ固定 or min-height などで工夫可能ですが、ここではautoにしておき、
+     余白や枠などで見栄えを調整します。
 
-/* 大きい1枚 + 縦2枚 */
+  2) 縦2枚は、その下に同じ幅で2枚を縦に並べる。
+*/
 .photoset-large-and-vertical2 {
-  display: flex;
-  gap: 1rem;
   margin-bottom: 2rem;
 }
-.left-large-img, .right-vertical-2 {
-  flex: 1;
-  position: relative;
-}
+
+/* 大きい画像だけをまとめるラップ要素 */
 .left-large-img img {
   width: 100%;
   height: auto;
   display: block;
+  margin-bottom: 1rem;
 }
-.right-vertical-2 {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+
+/* 2枚の画像を縦に並べる */
 .right-vertical-2 img {
   width: 100%;
   height: auto;
   display: block;
+  margin-bottom: 1rem;
 }
 
-/* 3カラムで画像3枚 */
+/* 3カラム → SPでは1カラムでもOKだが
+   要件によるので、ここでは「2) SP版だけど3枚連続で表示」を
+   縦に並べる例にしています。
+*/
 .photoset-3columns {
-  display: flex;
-  gap: 1rem;
   margin-bottom: 2rem;
 }
 .photoset-3columns img {
   width: 100%;
   height: auto;
   display: block;
-  flex: 1;
+  margin-bottom: 1rem;
 }
 
-/* 画像に軽いシャドウを付けて雑誌っぽく */
+/* 画像の見た目(影や角丸) */
 .theme-section img {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   border-radius: 4px;
 }
 
-/* =========================
-   レスポンシブ対応
-========================= */
-@media (max-width: 768px) {
-  .photoset-large-and-vertical2 {
-    flex-direction: column;
-  }
-  .photoset-3columns {
-    flex-direction: column;
-  }
+/* SP版につき、特別なメディアクエリは最小限に */
+@media (max-width: 600px) {
+  /* 必要があれば記述。今回は幅600px想定なので省略 */
 }
-
