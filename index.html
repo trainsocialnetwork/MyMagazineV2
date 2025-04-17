@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>RoomClip Magazine</title>
-  <!-- メタタグやアイコンなど必要に応じて追加 -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="wrapper">
+  
   <!-- ★ 表紙セクション ★ -->
   <header class="cover">
-    <!-- カバー画像を後でJSから差し替えてもOKですが、ここでは一旦空にしておきます -->
     <div class="cover-image-wrapper">
-      <img src="" alt="Magazine Cover Image" class="cover-image" id="cover-image">
+      <!-- JSで差し替えるが、初期状態としてプレースホルダーを設定 -->
+      <img src="https://via.placeholder.com/800x500?text=Cover+Image" 
+           alt="Magazine Cover Image" class="cover-image" id="cover-image">
     </div>
 
     <!-- タイトル・号数 -->
     <div class="cover-heading">
       <h1>RoomClip MAGAZINE</h1>
-      <!-- 縦書きを使う例 -->
-      <p class="issue-info">2025<br>4月号</p>
+      <p class="issue-info">2025年<br>4月号</p>
     </div>
 
     <!-- キャッチコピーを重ねる -->
@@ -42,8 +42,6 @@
 
 </div><!-- /wrapper -->
 
-<!-- 必要に応じてJS読み込み。magazine_data.jsonと同じ階層にある想定 -->
 <script src="script.js"></script>
-
 </body>
 </html>
