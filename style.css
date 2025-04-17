@@ -18,6 +18,7 @@ body {
   width: 100%;
   position: relative;
   background: #fff;
+  padding-bottom: 40%;
 }
 .v601_23 {
   /* 最もスコアの高い画像をbackground-imageで差し替え */
@@ -30,6 +31,7 @@ body {
   background-repeat: no-repeat;
   top: 150px;
   left: 0px;
+  position: relative;
 }
 /* タイトル文字類 */
 .v601_27, .v601_28, .v601_34, .v601_35 {
@@ -39,25 +41,25 @@ body {
   font-family: Noto Sans CJK JP;
 }
 .v601_27 {
-  top: 20px;
-  left: 20px;
-  font-size: 24px;
+  top: 100px;
+  right: 50px;
+  font-size: 48px;
   line-height: 1.3;
 }
 .v601_28 {
-  top: 60px;
-  left: 20px;
-  font-size: 18px;
+  top: 433px;
+  left: 10px;
+  font-size: 42px;
   line-height: 1.4;
 }
 .v601_34 {
-  top: 20px;
+  top: 200px;
   right: 20px;
-  font-size: 16px;
+  font-size: 20px;
   text-align: right;
 }
 .v601_35 {
-  top: 60px;
+  top: 260px;
   right: 20px;
   font-size: 16px;
   text-align: right;
@@ -158,7 +160,7 @@ body {
    テーマ見出し/導入文
 ====================================== */
 .theme-section-title {
-  font-size: 2.0rem;
+  font-size: 3.0rem;
   font-weight: bold;
   margin-top: 1rem;
   border-left: 4px solid #666;
@@ -167,7 +169,7 @@ body {
   font-family: 'Noto Sans CJK JP', sans-serif;
 }
 .theme-section-intro {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   color: #555;
   margin-bottom: 1rem;
   font-family: 'Noto Sans CJK JP', sans-serif;
