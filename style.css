@@ -12,154 +12,161 @@ body {
 }
 
 /* ----------------------------
-   表紙 (トップ)部分
+   表紙(トップ)部分
 ---------------------------- */
+/* 画面幅を100%使う */
 .v601_22 {
-  /* 幅360px, 高さ400pxとのことですが、画面レイアウトに応じて調整ください */
-  width: 360px;
-  height: 400px;
-  background: rgba(255,255,255,1);
-  position: relative; 
-  /* ここを absolute でtop:0;left:0; にする場合、他要素と被らないよう注意 */
-  margin: 0 auto; /* 真ん中に配置(任意) */
+  width: 100%;
+  height: auto; /* 必要に応じて固定高をやめる */
+  position: relative;
   overflow: hidden;
+  /* スマホで一番上から表示されるように */
+  background: #fff;
 }
+
+/* 背景画像を差し替える要素(最もスコアの高い画像をscript.jsで設定) */
 .v601_23 {
-  width: 299px;
-  height: 299px;
+  width: 100%;
+  height: 320px; 
+  /* 画像表示領域の高さ。適宜調整 */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  position: absolute;
-  top: 80px;  /* デフォルト150px→調整 */
-  left: 30px; /* デフォルト0px→見栄えに合わせ調整 */
+  position: relative; /* 親の中で通常フロー */
 }
+
+/* タイトル文字などを絶対配置する場合は注意 */
 .v601_27 {
-  width: 206px;
-  color: rgba(0,0,0,1);
   position: absolute;
   top: 20px;
-  left: 140px;
+  left: 20px;
   font-weight: bold;
-  font-size: 28px; /* 40px→スマホ向けに少し小さめ */
-  text-align: left;
-  line-height: 1.2;
+  font-size: 24px;
+  color: #000;
+  line-height: 1.3;
+  font-family: Noto Sans CJK JP;
 }
 .v601_28 {
   width: 211px;
   color: rgba(0,0,0,1);
   position: absolute;
-  top: 200px;
+  top: 433px;
   left: 10px;
-  font-weight: bold;
-  font-size: 18px; /* 30px->SP版調整 */
+  font-family: Noto Sans CJK JP;
+  font-weight: Bold;
+  font-size: 30px;
+  opacity: 1;
   text-align: left;
-  line-height: 1.4;
 }
 .v601_34 {
-  width: 22px;
-  color: rgba(0,0,0,1);
   position: absolute;
-  top: 80px;
-  left: 320px;
+  top: 20px;
+  right: 20px;
   font-weight: bold;
-  font-size: 14px; 
-  text-align: center;
+  font-size: 16px;
+  color: #000;
+  text-align: right;
   line-height: 1.2;
+   font-family: Noto Sans CJK JP;
 }
 .v601_35 {
-  width: 74px;
-  color: rgba(0,0,0,1);
   position: absolute;
-  top: 120px;
-  left: 300px;
+  top: 60px;
+  right: 20px;
   font-weight: bold;
-  font-size: 14px; 
-  text-align: center;
+  font-size: 16px;
+  color: #000;
+  text-align: right;
   line-height: 1.2;
+   font-family: Noto Sans CJK JP;
 }
 
 /* ----------------------------
-   目次セクション
+   目次
 ---------------------------- */
 .table-of-contents {
-  margin: 410px auto 2rem; 
-  /* 表紙が高さ400pxなので、その下に配置（上記v601_22と位置の兼ね合いに注意） */
-  max-width: 360px; /* 同じ幅を想定 */
+  margin: 0.5rem auto 1rem; /* 表紙直下の余白を最小限に */
   padding: 0 1rem;
 }
 .table-of-contents h2 {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   border-bottom: 2px solid #ccc;
   display: inline-block;
 }
+/* 横並び折り返し */
 #toc-list {
   display: flex;
-  flex-wrap: wrap; /* 折り返し */
+  flex-wrap: wrap;
   gap: 0.5rem;
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 #toc-list li {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 0.3rem 0.5rem;
   background: #f9f9f9;
-  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
 }
 #toc-list li a {
   text-decoration: none;
   color: #333;
+  font-size: 0.9rem;
 }
 #toc-list li a:hover {
   color: #777;
 }
 
 /* ----------------------------
-   テーマコンテナ
+   動的コンテンツ (テーマごとの画像レイアウト)
 ---------------------------- */
 #themes-container {
-  max-width: 360px;
-  margin: 0 auto 3rem;
-  padding: 0 1rem;
+  padding: 0 1rem 2rem;
 }
 
-/* 大画像+縦2枚レイアウト, 3カラム などは
-   これまでのコード方針に合わせて記述。
-   SP版用に例として縦に並ぶ実装を簡易記載
-*/
+/* (1) 大1枚 + 縦2枚 */
 .photoset-large-and-vertical2 {
+  display: flex;
   margin-bottom: 1.5rem;
+  gap: 0.5rem;
 }
-.large-img img {
+.left-large-img {
+  flex: 2; /* 大きい画像用に比率を多めに */
+}
+.left-large-img img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 0.5rem;
 }
-.vertical-2 img {
+.right-vertical-2 {
+  flex: 1; /* 縦2枚を同じ高さに収める */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.right-vertical-2 img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 0.5rem;
 }
 
-/* 3カラム → 実際はSPで縦並び */
+/* (2) 3カラム */
 .photoset-3columns {
+  display: flex;
   margin-bottom: 1.5rem;
+  gap: 0.5rem;
 }
 .photoset-3columns img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 0.5rem;
+  flex: 1; /* 各カラムを均等幅 */
 }
 
-/* テーマ見出し */
+/* テーマセクションの見出しや導入文 */
 .theme-section-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-top: 1rem;
   border-left: 4px solid #666;
@@ -171,11 +178,25 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* 画像スタイル */
+/* 画像に軽い装飾 */
 .theme-section-img {
-  width: 100%;
   border: 1px solid #eee;
   border-radius: 4px;
-  margin-bottom: 0.5rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+/* ----------------------------
+   レスポンシブ対応 (任意)
+   小さい画面でも横並びを維持する指示ですが、
+   もし小さい画面で縦並びにしたい場合は↓のように書く
+---------------------------- */
+/*
+@media (max-width: 600px) {
+  .photoset-large-and-vertical2 {
+    flex-direction: column;
+  }
+  .photoset-3columns {
+    flex-direction: column;
+  }
+}
+*/
