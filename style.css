@@ -18,14 +18,14 @@ body {
   width: 100%;
   position: relative;
   background: #fff;
-  padding-bottom: 40%;
+  padding-bottom: 20%;
 }
 .v601_23 {
   /* 最もスコアの高い画像をbackground-imageで差し替え */
   width: 83%;
   /* ▼追加：aspect-ratioで1:1の正方形 ▼ */
   aspect-ratio: 1 / 1;
-  border-radius: 4px;
+  border-radius: 12px;
   background-position: center left;
   background-size: cover;
   background-repeat: no-repeat;
@@ -39,9 +39,9 @@ body {
   color: #000;
   font-weight: bold;
   font-family: Noto Sans CJK JP;
-  position: relative;
 }
 .v601_27 {
+  width:40%
   top: 100px;
   right: 50px;
   font-size: 70px;
@@ -51,9 +51,10 @@ body {
 .v601_28 {
   bottom: 200px;
   left: 10px;
-  font-size: 60px;
+  font-size: 40px;
   line-height: 1.4;
 text-align: left;
+   width:50%
 }
 .v601_34 {
   bottom: 200px;
