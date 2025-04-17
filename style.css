@@ -19,7 +19,7 @@ body {
   width: 70%;
   height: 320px; /* 背景画像の高さ */
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: 5% 30%;
   background-size: cover;
 }
 .v601_27, .v601_28, .v601_34, .v601_35 {
